@@ -11,6 +11,7 @@ import 'conecciones/conecciones.dart';
 import 'modelos/fraccionamientos.dart';
 import 'package:http/http.dart' as http;
 import 'modelos/invitadoModel.dart';
+import 'widget/columnBuilder.dart';
 
 class VistaUrl extends StatefulWidget {
   String qrCode;
@@ -26,6 +27,7 @@ class _VistaUrlState extends State<VistaUrl> {
 
   final FirebaseFirestore db = FirebaseFirestore.instance;
   Color _colorFrac = Colors.white;
+  Fraccionamiento? fraccionamiento;
 
   @override
   void initState() {
@@ -88,7 +90,7 @@ class _VistaUrlState extends State<VistaUrl> {
             const SizedBox(
               height: 30,
             ),
-            _reglamento(),
+            _reglamento(invitado),
             const SizedBox(
               height: 30,
             ),
@@ -121,7 +123,7 @@ class _VistaUrlState extends State<VistaUrl> {
           return const CircularProgressIndicator();
         }
 
-        String url = s.data!.urlLogopng.toString();
+        String url = s.data!.logoWeb.toString();
         _colorFrac = s.data!.getColor();
         String urlUbicacion = s.data!.urlUbicacion.toString();
 
@@ -163,7 +165,7 @@ class _VistaUrlState extends State<VistaUrl> {
     );
   }
 
-  _reglamento() {
+  /*_reglamento() {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 15, top: 10, bottom: 10),
       margin: const EdgeInsets.only(left: 10, right: 10),
@@ -201,6 +203,73 @@ class _VistaUrlState extends State<VistaUrl> {
         ),
       ]),
     );
+  }*/
+
+  _reglamento(Invitado invitado) {
+    return FutureBuilder(
+        future: getFraccionamientoId(invitado.idFraccionamiento!),
+        builder: (e, AsyncSnapshot<Fraccionamiento?> s) {
+          if (s.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+
+          fraccionamiento = s.data;
+
+          if (s.data!.reglasWeb == null || s.data!.reglasWeb!.isEmpty) {
+            return SizedBox();
+          }
+          //print("FRACCIONAMIENTOOOOOOOOOO");
+          //print(s.data!.reglasWeb.toString());
+
+          return Container(
+              padding:
+                  EdgeInsets.only(left: 20, right: 15, top: 10, bottom: 10),
+              margin: EdgeInsets.only(left: 10, right: 10),
+              decoration: BoxDecoration(
+                border: Border.all(width: 1.0),
+                borderRadius: BorderRadius.all(Radius.circular(
+                        25.0) //                 <--- border radius here
+                    ),
+              ),
+              child: ColumnBuilder(
+                itemCount: fraccionamiento!.reglasWeb!.length,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                itemBuilder: (c, i) {
+                  return Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(fraccionamiento!.reglasWeb![i].toString(),
+                          style: TextStyle(color: Colors.red[900])));
+                },
+              )
+              //  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              //   Container(
+              //       child: Text("1.- LÍMITE DE VELOCIDAD 30 KM/H BOULEVARD",
+              //           style: TextStyle(color: Colors.red[900]))),
+              //   Container(
+              //     child: Text("2.- LÍMITE DE VELOCIDAD 30 KM/H EN CALLES INTERNAS",
+              //         style: TextStyle(color: Colors.red[900])),
+              //   ),
+              //   Container(
+              //     child: Text(
+              //         "3.- SANCIÓN DE \$ 750. 00 PESOS M.N. POR EXCESO DE VELOCIDAD",
+              //         style: TextStyle(color: Colors.red[900])),
+              //   ),
+              //   Container(
+              //     child: Text("4.- PROHIBIDO TEXTEAR MIENTRAS CONDUCES",
+              //         style: TextStyle(color: Colors.red[900])),
+              //   ),
+              //   Container(
+              //     child: Text(
+              //         "5.- ES NECESARIO PRESENTAR UNA IDENTIFICACIÓN OFICIAL AL INGRESAR",
+              //         style: TextStyle(color: Colors.red[900])),
+              //   ),
+              //   Container(
+              //     child: Text("6.- NO ESTACIONARSE EN PROPIEDADES PRIVADAS",
+              //         style: TextStyle(color: Colors.red[900])),
+              //   ),
+              // ]),
+              );
+        });
   }
 
   Future<Fraccionamiento?> getFraccionamientoId(String id) async {
@@ -213,7 +282,7 @@ class _VistaUrlState extends State<VistaUrl> {
       return null;
     }
     final String _url =
-        'https://communedemo-default-rtdb.firebaseio.com/configuracion/fraccionamiento/${id}.json';
+        'https://commune-360-default-rtdb.firebaseio.com/configuracion/fraccionamientos/${id}.json';
 
     try {
       final response = await http.get(Uri.parse(_url));
