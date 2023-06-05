@@ -8,6 +8,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'conecciones/conecciones.dart';
+import 'modelos/UsuarioModel.dart';
 import 'modelos/fraccionamientos.dart';
 import 'package:http/http.dart' as http;
 import 'modelos/invitadoModel.dart';
@@ -24,10 +25,13 @@ class VistaUrl extends StatefulWidget {
 class _VistaUrlState extends State<VistaUrl> {
   late double h, w;
   late String _token;
+  
 
   final FirebaseFirestore db = FirebaseFirestore.instance;
   Color _colorFrac = Colors.white;
   Fraccionamiento? fraccionamiento;
+  Conecciones conecciones = Conecciones();
+  Usuario _usuario = new Usuario();
 
   @override
   void initState() {
@@ -55,7 +59,7 @@ class _VistaUrlState extends State<VistaUrl> {
   }
 
   _carga() {
-    Conecciones conecciones = Conecciones();
+    
     return FutureBuilder(
       future: conecciones.getProfile(this.widget.qrCode),
       builder: (c, AsyncSnapshot<Invitado?> s) {
@@ -90,6 +94,10 @@ class _VistaUrlState extends State<VistaUrl> {
             const SizedBox(
               height: 30,
             ),
+            _direccion(invitado),
+            const SizedBox(
+              height: 30,
+            ),
             _reglamento(invitado),
             const SizedBox(
               height: 30,
@@ -100,6 +108,34 @@ class _VistaUrlState extends State<VistaUrl> {
               size: 200,
             ),
             _logo(invitado),
+          ],
+        );
+      },
+    );
+  }
+
+  _direccion(Invitado invitado) {
+    return FutureBuilder(
+      future: conecciones.getProfileUsuario(invitado.idResidente.toString()),
+      builder: (e, AsyncSnapshot<Usuario?> s) {
+        if (s.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        
+        _usuario = s.data!;
+
+        return Column(
+          children: [
+            Container(
+              child: Text("Dirección:"),
+            ),            
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              //height: 150,
+              child: Text(_usuario.direccion.toString(), style: TextStyle(fontWeight: FontWeight.bold),),
+            ),
           ],
         );
       },

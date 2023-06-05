@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       shortcuts: {
         LogicalKeySet(LogicalKeyboardKey.space): ActivateIntent(),
       },
-      title: 'Latitud',
+      title: 'Commune 360',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           fontFamily: GoogleFonts.poppins().fontFamily,
