@@ -25,7 +25,7 @@ class VistaUrl extends StatefulWidget {
 class _VistaUrlState extends State<VistaUrl> {
   late double h, w;
   late String _token;
-  late bool _nid;
+  late bool _nid = false;
   
 
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -103,9 +103,9 @@ class _VistaUrlState extends State<VistaUrl> {
             const SizedBox(
               height: 30,
             ),
-            (!(_nid)) ?
+            (!(invitado.nid != null)) ?
             QrImage(
-              data: this.widget.qrCode.toString(),
+              data: invitado.id.toString(),
               version: QrVersions.auto,
               size: 200,
             ): QrImage(

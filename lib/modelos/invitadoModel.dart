@@ -146,7 +146,7 @@ class Invitado {
         idLote: data['idLote'] ?? 0,
         idRegistro: data['idRegistro'] ?? 0,
         activo: data['activo'] ?? false,
-        nid: data['nid'] ?? false,
+        nid: data['nid'] ?? null,
         idEvento: data['idEvento']);
   }
 }
