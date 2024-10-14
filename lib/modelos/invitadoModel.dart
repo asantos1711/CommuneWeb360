@@ -25,6 +25,7 @@ class Invitado {
   String? idFraccionamiento;
   int? idLote;
   int? idRegistro;
+  int? nid;
 
   Invitado(
       {this.id,
@@ -47,6 +48,7 @@ class Invitado {
       this.activo,
       this.idLote,
       this.idRegistro,
+      this.nid,
       this.idFraccionamiento});
 
   Map<String, dynamic> toJson() => {
@@ -70,6 +72,7 @@ class Invitado {
         'activo': activo,
         'idLote': idLote,
         'idRegistro': idRegistro,
+        'nid': nid,
         'idFraccionamiento': idFraccionamiento
       };
 
@@ -143,6 +146,7 @@ class Invitado {
         idLote: data['idLote'] ?? 0,
         idRegistro: data['idRegistro'] ?? 0,
         activo: data['activo'] ?? false,
+        nid: data['nid'] ?? false,
         idEvento: data['idEvento']);
   }
 }

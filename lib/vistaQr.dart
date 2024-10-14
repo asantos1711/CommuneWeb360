@@ -25,6 +25,7 @@ class VistaUrl extends StatefulWidget {
 class _VistaUrlState extends State<VistaUrl> {
   late double h, w;
   late String _token;
+  late bool _nid;
   
 
   final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -102,8 +103,13 @@ class _VistaUrlState extends State<VistaUrl> {
             const SizedBox(
               height: 30,
             ),
+            (!(_nid)) ?
             QrImage(
               data: this.widget.qrCode.toString(),
+              version: QrVersions.auto,
+              size: 200,
+            ): QrImage(
+              data: invitado.nid.toString(),
               version: QrVersions.auto,
               size: 200,
             ),
@@ -162,6 +168,8 @@ class _VistaUrlState extends State<VistaUrl> {
         String url = s.data!.logoWeb.toString();
         _colorFrac = s.data!.getColor();
         String urlUbicacion = s.data!.urlUbicacion.toString();
+        _nid = s.data!.idNumerico as bool;
+
 
         return Column(
           children: [
