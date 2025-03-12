@@ -3,9 +3,8 @@
     "configurations": [
         {
             "name": "debug_option_1",
-            "request": "launch",
+           "request": "launch",
             "type": "dart",
-            "flutterMode": "debug",
             "args": [
                 "-d",
                 "chrome",

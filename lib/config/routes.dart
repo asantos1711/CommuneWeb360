@@ -27,12 +27,12 @@ class RouterGenerator {
 
     switch (settings.name) {
       case "/login":
-        return pageRoute("/inicio", Page404());
+        return pageRoute("/inicio", NotFoundPage());
       case "/menuConfiguracion":
-        return pageRoute("/menuConfiguracion", Page404());
+        return pageRoute("/menuConfiguracion", NotFoundPage());
 
       default:
-        return pageRoute("/404", Page404());
+        return pageRoute("/404", NotFoundPage());
     }
   }
 

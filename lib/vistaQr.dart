@@ -26,7 +26,6 @@ class _VistaUrlState extends State<VistaUrl> {
   late double h, w;
   late String _token;
   late bool _nid = false;
-  
 
   final FirebaseFirestore db = FirebaseFirestore.instance;
   Color _colorFrac = Colors.white;
@@ -60,7 +59,6 @@ class _VistaUrlState extends State<VistaUrl> {
   }
 
   _carga() {
-    
     return FutureBuilder(
       future: conecciones.getProfile(this.widget.qrCode),
       builder: (c, AsyncSnapshot<Invitado?> s) {
@@ -103,16 +101,17 @@ class _VistaUrlState extends State<VistaUrl> {
             const SizedBox(
               height: 30,
             ),
-            (!(invitado.nid != null)) ?
-            QrImage(
-              data: invitado.id.toString(),
-              version: QrVersions.auto,
-              size: 200,
-            ): QrImage(
-              data: invitado.nid.toString(),
-              version: QrVersions.auto,
-              size: 200,
-            ),
+            (!(invitado.nid != null))
+                ? QrImage(
+                    data: invitado.id.toString(),
+                    version: QrVersions.auto,
+                    size: 200,
+                  )
+                : QrImage(
+                    data: invitado.nid.toString(),
+                    version: QrVersions.auto,
+                    size: 200,
+                  ),
             _logo(invitado),
           ],
         );
@@ -127,20 +126,23 @@ class _VistaUrlState extends State<VistaUrl> {
         if (s.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         }
-        
+
         _usuario = s.data!;
 
         return Column(
           children: [
             Container(
               child: Text("Dirección:"),
-            ),            
+            ),
             SizedBox(
               height: 10,
             ),
             Container(
               //height: 150,
-              child: Text(_usuario.direccion.toString(), style: TextStyle(fontWeight: FontWeight.bold),),
+              child: Text(
+                _usuario.direccion.toString(),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         );
@@ -152,6 +154,20 @@ class _VistaUrlState extends State<VistaUrl> {
     //const url = 'https://www.google.com/maps/dir//21.1109375,-86.8425279/@21.1108518,-86.9125808,12z';
     if (await canLaunch(url)) {
       await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchSelfURLBrowser(String url) async {
+    //const url = 'https://www.google.com/maps/dir//21.1109375,-86.8425279/@21.1108518,-86.9125808,12z';
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: true,
+        forceWebView: true,
+        webOnlyWindowName: '_self',
+      );
     } else {
       throw 'Could not launch $url';
     }
@@ -169,7 +185,7 @@ class _VistaUrlState extends State<VistaUrl> {
         _colorFrac = s.data!.getColor();
         String urlUbicacion = s.data!.urlUbicacion.toString();
         _nid = s.data!.idNumerico as bool;
-
+        Fraccionamiento fraccionamiento = s.data!;
 
         return Column(
           children: [
@@ -195,7 +211,25 @@ class _VistaUrlState extends State<VistaUrl> {
                     "Ver ubicación",
                     style: TextStyle(color: Colors.white),
                   )),
+            ), const SizedBox(
+              height: 10,
             ),
+            (
+                    (!(invitado.verificado ?? false)))
+                ? TextButton(
+                    onPressed: () {
+                      _launchSelfURLBrowser(
+                          "https://facecomparasion.web.app/#/faceComparasionWeb/" +
+                              (invitado?.id ?? ""));
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.white, // Color del texto
+                      // padding: const EdgeInsets.symmetric(
+                      //     horizontal: 20, vertical: 12),
+                    ),
+                    child: Image.asset("verify.png", width: 100,),
+                  )
+                : SizedBox(),
             const SizedBox(
               height: 10,
             ),
@@ -203,6 +237,7 @@ class _VistaUrlState extends State<VistaUrl> {
               height: 150,
               child: Image.network(url),
             ),
+           
           ],
         );
       },

@@ -26,6 +26,7 @@ class Invitado {
   int? idLote;
   int? idRegistro;
   int? nid;
+  bool? verificado;
 
   Invitado(
       {this.id,
@@ -49,6 +50,7 @@ class Invitado {
       this.idLote,
       this.idRegistro,
       this.nid,
+      this.verificado,
       this.idFraccionamiento});
 
   Map<String, dynamic> toJson() => {
@@ -71,6 +73,7 @@ class Invitado {
         'placas': placas,
         'activo': activo,
         'idLote': idLote,
+        'verificado': verificado??false,
         'idRegistro': idRegistro,
         'nid': nid,
         'idFraccionamiento': idFraccionamiento
@@ -110,6 +113,7 @@ class Invitado {
       //fotoPlaca: data['fotoPlaca'] ?? '',
       //referencia: data['referencia'] ?? '',
       fotoIdUrl: data['fotoIdUrl'] ?? '',
+      verificado: data['verificado'] ?? false,
       fotoPlacaUrl: data['fotoPlacaUrl'] ?? '',
       // recurrente: data['recurrente'] ?? '',
       //idResidente: data['idResidente'] ?? '',
@@ -146,6 +150,7 @@ class Invitado {
         idLote: data['idLote'] ?? 0,
         idRegistro: data['idRegistro'] ?? 0,
         activo: data['activo'] ?? false,
+        verificado: data['verificado'] ?? false,
         nid: data['nid'] ?? null,
         idEvento: data['idEvento']);
   }
