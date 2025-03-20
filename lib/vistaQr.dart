@@ -128,6 +128,9 @@ class _VistaUrlState extends State<VistaUrl> {
         }
 
         _usuario = s.data!;
+        var direccion = _usuario.idFraccionamiento == "jardinesdelsur5"
+            ? _usuario.direccion.toString().replaceAll("Etapa", "Casa")
+            : _usuario.direccion.toString();
 
         return Column(
           children: [
@@ -140,7 +143,7 @@ class _VistaUrlState extends State<VistaUrl> {
             Container(
               //height: 150,
               child: Text(
-                _usuario.direccion.toString(),
+                direccion,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
@@ -211,11 +214,11 @@ class _VistaUrlState extends State<VistaUrl> {
                     "Ver ubicación",
                     style: TextStyle(color: Colors.white),
                   )),
-            ), const SizedBox(
+            ),
+            const SizedBox(
               height: 10,
             ),
-            (
-                    (!(invitado.verificado ?? false)))
+            ((!(invitado.verificado ?? false)))
                 ? TextButton(
                     onPressed: () {
                       _launchSelfURLBrowser(
@@ -227,7 +230,10 @@ class _VistaUrlState extends State<VistaUrl> {
                       // padding: const EdgeInsets.symmetric(
                       //     horizontal: 20, vertical: 12),
                     ),
-                    child: Image.asset("verify.png", width: 100,),
+                    child: Image.asset(
+                      "verify.png",
+                      width: 100,
+                    ),
                   )
                 : SizedBox(),
             const SizedBox(
@@ -237,7 +243,6 @@ class _VistaUrlState extends State<VistaUrl> {
               height: 150,
               child: Image.network(url),
             ),
-           
           ],
         );
       },
