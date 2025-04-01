@@ -14,6 +14,7 @@ class Fraccionamiento {
   String? terminos;
   String? urlUbicacion;
   String? logoWeb;
+  String? textAlertaFotoW;
   List<String>? reglasWeb;
   bool? idNumerico;
   bool? fastEntry;
@@ -34,6 +35,7 @@ class Fraccionamiento {
       this.reglasWeb,
       this.idNumerico,
       this.fastEntry,
+      this.textAlertaFotoW,
       this.reportes});
 
   Color getColor() {
@@ -50,6 +52,7 @@ class Fraccionamiento {
         urlApi: json["urlApi"] == null ? null : json["urlApi"],
         pagar: json["pagar"] == null ? null : json["pagar"],
         logoWeb: json["logoWeb"] == null ? null : json["logoWeb"],
+        textAlertaFotoW: json["textAlertaFotoW"] == null ? null : json["textAlertaFotoW"],
         reglasWeb: json["reglasWeb"] == null
             ? null
             : List<String>.from(json["reglasWeb"].map((x) => x)),
@@ -76,6 +79,7 @@ class Fraccionamiento {
         "reportes": reportes == null ? false : reportes,
         "logoWeb": logoWeb == null ? null : logoWeb,
         "idNumerico": idNumerico == null ? null : idNumerico,
+        "textAlertaFotoW": textAlertaFotoW == null ? null : textAlertaFotoW,
         "fastEntry": fastEntry == null ? false : fastEntry,
         "urlUbicacion": urlUbicacion == null ? false : urlUbicacion,
         "color": color == null ? null : color!.toJson(),

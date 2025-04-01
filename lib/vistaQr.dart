@@ -189,9 +189,36 @@ class _VistaUrlState extends State<VistaUrl> {
         String urlUbicacion = s.data!.urlUbicacion.toString();
         _nid = s.data!.idNumerico as bool;
         Fraccionamiento fraccionamiento = s.data!;
+       
 
         return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            ((fraccionamiento.idNumerico ?? false) &&
+              (invitado.fotoIdUrl == null || invitado.fotoIdUrl!.isEmpty)) ? Container(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Icon(
+                      Icons.warning,
+                      color: Colors.amber,
+                      size: 30,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      fraccionamiento.textAlertaFotoW ?? "",textAlign: TextAlign.justify,
+                    ),
+                  )
+                ],
+              ),
+            ):SizedBox(),
             Container(
               child: const Text("¿No sabes cómo llegar? "),
             ),
@@ -288,6 +315,33 @@ class _VistaUrlState extends State<VistaUrl> {
       ]),
     );
   }*/
+
+  // Future<void> _dialogBuilder(BuildContext context, String text) {
+  //   return showDialog<void>(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         // title: const Text('QR no validado'),
+  //         content:Container(
+  //           child: Row(
+  //             children: [ Icon(Icons.warning, color: Colors,), Expanded(child: Text(text,),)],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             style: TextButton.styleFrom(
+  //                 textStyle: Theme.of(context).textTheme.labelLarge),
+  //             child: const Text('De acuerdo'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   _reglamento(Invitado invitado) {
     return FutureBuilder(
