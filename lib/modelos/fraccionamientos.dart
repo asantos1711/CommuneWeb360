@@ -17,6 +17,7 @@ class Fraccionamiento {
   String? textAlertaFotoW;
   List<String>? reglasWeb;
   bool? idNumerico;
+  bool? alertFotoVisita;
   bool? fastEntry;
 
   Fraccionamiento(
@@ -34,6 +35,7 @@ class Fraccionamiento {
       this.logoWeb,
       this.reglasWeb,
       this.idNumerico,
+      this.alertFotoVisita,
       this.fastEntry,
       this.textAlertaFotoW,
       this.reportes});
@@ -60,6 +62,7 @@ class Fraccionamiento {
             json["urlUbicacion"] == null ? null : json["urlUbicacion"],
         amenidades: json["amenidades"] == null ? false : json["amenidades"],
         reportes: json["reportes"] == null ? false : json["reportes"],
+        alertFotoVisita: json["alertFotoVisita"] == null ? false : json["alertFotoVisita"],
         idNumerico: json["idNumerico"] == null ? false : json["idNumerico"],
         terminos: json["terminos"] == null ? null : json["terminos"],
         fastEntry: json["fastEntry"] == null ? false : json["fastEntry"],
@@ -77,6 +80,7 @@ class Fraccionamiento {
         "amenidades": amenidades == null ? null : amenidades,
         "terminos": terminos == null ? false : terminos,
         "reportes": reportes == null ? false : reportes,
+        "alertFotoVisita": alertFotoVisita == null ? false : alertFotoVisita,
         "logoWeb": logoWeb == null ? null : logoWeb,
         "idNumerico": idNumerico == null ? null : idNumerico,
         "textAlertaFotoW": textAlertaFotoW == null ? null : textAlertaFotoW,

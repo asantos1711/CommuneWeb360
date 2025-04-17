@@ -195,7 +195,7 @@ class _VistaUrlState extends State<VistaUrl> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ((fraccionamiento.idNumerico ?? false) &&
+            ((fraccionamiento.alertFotoVisita ?? false) &&
               (invitado.fotoIdUrl == null || invitado.fotoIdUrl!.isEmpty)) ? Container(
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
               alignment: Alignment.center,
@@ -245,24 +245,24 @@ class _VistaUrlState extends State<VistaUrl> {
             const SizedBox(
               height: 10,
             ),
-            ((!(invitado.verificado ?? false)))
-                ? TextButton(
-                    onPressed: () {
-                      _launchSelfURLBrowser(
-                          "https://facecomparasion.web.app/#/faceComparasionWeb/" +
-                              (invitado?.id ?? ""));
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.white, // Color del texto
-                      // padding: const EdgeInsets.symmetric(
-                      //     horizontal: 20, vertical: 12),
-                    ),
-                    child: Image.asset(
-                      "verify.png",
-                      width: 100,
-                    ),
-                  )
-                : SizedBox(),
+            // ((!(invitado.verificado ?? false)))
+            //     ? TextButton(
+            //         onPressed: () {
+            //           _launchSelfURLBrowser(
+            //               "https://facecomparasion.web.app/#/faceComparasionWeb/" +
+            //                   (invitado?.id ?? ""));
+            //         },
+            //         style: TextButton.styleFrom(
+            //           backgroundColor: Colors.white, // Color del texto
+            //           // padding: const EdgeInsets.symmetric(
+            //           //     horizontal: 20, vertical: 12),
+            //         ),
+            //         child: Image.asset(
+            //           "verify.png",
+            //           width: 100,
+            //         ),
+            //       )
+            //     : SizedBox(),
             const SizedBox(
               height: 10,
             ),
